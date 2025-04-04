@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Dynamic List</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f4f4f4;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 350px;
+      background: #000;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .add-btn {
+      background-color: #007bff;
+    }
+
+    .clear-btn {
+      background-color: #dc3545;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    li {
+      background: #f1f1f1;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    li button {
+      background: #ff4d4d;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      color: white;
+      cursor: pointer;
+    }
+
+    li button:hover {
+      background: #e60000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>My To-Do List</h2>
+    <input type="text" id="itemInput" placeholder="Enter item">
+    <div>
+      <button class="btn add-btn" onclick="addItem()">Add Item</button>
+      <button class="btn clear-btn" onclick="clearAll()">Clear All</button>
+    </div>
+    <ul id="itemList"></ul>
+  </div>
+
+  <script>
+    const input = document.getElementById("itemInput");
+    const itemList = document.getElementById("itemList");
+
+    function addItem() {
+      const itemText = input.value.trim();
+      if (!itemText) return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${itemText}
+        <button onclick="removeItem(this)">Remove</button>
+      `;
+
+      itemList.appendChild(li);
+      input.value = "";
+      input.focus();
+    }
+
+    function removeItem(button) {
+      const li = button.parentElement;
+      li.style.opacity = 0;
+      setTimeout(() => li.remove(), 300); // smooth fade out
+    }
+
+    function clearAll() {
+      itemList.innerHTML = "";
+    }
+
+    // Add item on Enter key
+    input.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        addItem();
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Count Button Clicks</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: blueviolet;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 24px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #28a745;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    #clickCount {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="center-container">
+    <button onclick="countClicks()">Click Me</button>
+    <p id="clickCount">Button Clicked: 0 times</p>
+  </div>
+
+  <script>
+    let count = 0;
+    function countClicks() {
+      count++;
+      document.getElementById("clickCount").textContent = `Button Clicked: ${count} times`;
+    }
+  </script>
+</body>
+</html>

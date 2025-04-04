@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Show & Hide Password</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: greenyellow;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    input {
+      font-size: 18px;
+      padding: 10px;
+      margin-bottom: 15px;
+      width: 250px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #enterBtn {
+      background-color: #28a745;
+    }
+
+    #enterBtn:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="center-container">
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button onclick="togglePassword()" id="toggleBtn">Show</button>
+    <button onclick="submitPassword()" id="enterBtn">Enter</button>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById("passwordInput");
+      const button = document.getElementById("toggleBtn");
+      if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "Hide";
+      } else {
+        input.type = "password";
+        button.textContent = "Show";
+      }
+    }
+
+    function submitPassword() {
+      const input = document.getElementById("passwordInput").value;
+      alert("Entered Password: " + input);
+    }
+  </script>
+</body>
+</html>
