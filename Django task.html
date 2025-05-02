@@ -1,0 +1,110 @@
+#Steps to Install Django in a Virtual Environment
+# 1. Create a virtual environment
+python -m venv venv
+
+# 2. Activate the virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# 3. Install Django
+pip install django
+# 4. Create a new Django project            
+django-admin startproject todolist
+cd todolist
+# 5. Create a new Django app
+python manage.py startapp tasks 
+🧾 Define a Task model in tasks/models.py:
+python
+Copy
+Edit
+
+from django.db import models
+
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+        🔨 Create and Apply Migrations:
+        bash
+        Copy
+        Edit
+        python manage.py makemigrations
+        python manage.py migrate
+
+        
+
+#Views, Templates, and Static Files
+        📄 Create a View in tasks/views.py:
+        python
+        Copy
+        Edit
+        from django.shortcuts import render
+        from .models import Task
+        
+        def home(request):
+            tasks = Task.objects.all()
+            return render(request, 'home.html', {'tasks': tasks})
+
+            from django.urls import path
+            from . import views
+            
+            urlpatterns = [
+                path('', views.home, name='home'),
+            ]
+            📁 Create a Template in tasks/templates/home.html:
+            
+#Create Template
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>📝 To-Do List</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.title }} - 
+                {% if task.completed %}
+                    <span style="color: green;">Done</span>
+                {% else %}
+                    <span style="color: red;">Pending</span>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No tasks added yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+Link a CSS file from static Dictionary
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+li {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+In settings.py, make sure you have:
+
+STATIC_URL = 'static/'
+
+At the top of your home.html, add:
+{% load static %}
+
